@@ -5,6 +5,8 @@ import java.sql.Connection;
 import org.junit.Assert;
 import org.junit.Test;
 
+import nonageshop.ds.JdbcUtil;
+
 public class JdbcUtilTest {
 
 	@Test

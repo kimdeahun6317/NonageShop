@@ -1,4 +1,4 @@
-package nonageshop.ds.test;
+package nonageshop.ds;
 
 import java.io.IOException;
 import java.io.InputStream;
