@@ -15,6 +15,17 @@ public class Product {
 	private String bestYn; // 베스트상품여부
 	private Date regDate; // 등록일
 
+	public Product(int no, String name) {
+		super();
+		this.no = no;
+		this.name = name;
+	}
+
+	public Product(int no) {
+		super();
+		this.no = no;
+	}
+
 	public Product(int no, String name, int salePrice, String image) {
 		super();
 		this.no = no;

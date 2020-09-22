@@ -41,7 +41,7 @@ public class MemberDaoImpl implements MemberDao {
 		return result;
 	}
 
-	private Member getMember(ResultSet rs) throws SQLException {
+	public Member getMember(ResultSet rs) throws SQLException {
 		String id = rs.getString("ID");
 		String pwd = rs.getString("PWD");
 		String name = rs.getString("NAME");

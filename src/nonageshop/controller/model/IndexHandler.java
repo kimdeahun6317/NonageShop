@@ -17,7 +17,7 @@ public class IndexHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(request.getMethod().equalsIgnoreCase("GET")) {
+//		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
 		System.out.println("IndexHandler");
 		
@@ -27,10 +27,10 @@ public class IndexHandler implements Command {
 		request.setAttribute("newProductList", newProductList);
 		request.setAttribute("bestProductList", bestProductList);
 		return "index.jsp";
-		}else {
-			System.out.println("POST");
-			return null;
-		}
+//		}else {
+//			System.out.println("POST");
+//			return null;
+//		}
 	}
 
 }

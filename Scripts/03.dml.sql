@@ -75,10 +75,43 @@ zip_code ) VALUES (
 INSERT INTO address ( zip_no, sido, gugun, dong, bunji,
 zip_code ) VALUES ( 
 '135-918', '서울', '강남구', '역삼2동', '706∼707', '447'); 
+
+--order view
+SELECT * FROM ORDER_DETAIL;
+SELECT * FROM "MEMBER";
+
+create or replace view order_view
+as
+select d.NO dno, o.NO ono, o.id mid, o.ORDER_DATE , d.PNO pno, d.quantity, m.name mname,
+       m.zip_no, m.address, m.phone, p.name pname, p.SALEPRICE , d.RESULT_USEYN result   
+  from orders o JOIN order_detail d ON o.NO = d.ONO JOIN member m ON o.ID =m.ID 
+       JOIN product p ON d.PNO = p.NO;
+ 
+
  
  
- 
- 
+----------------------order
+SELECT * FROM ORDERS ;
+
+INSERT INTO ORDERS( ID,ORDER_DATE) VALUES( 'ONE',SYSDATE);
+insert into orders( id,) values( 'one');
+insert into orders( id,ORDER_DATE) values( 'test',sysdate);
+
+SELECT * FROM ORDER_DETAIL od ;
+
+INSERT INTO ORDER_DETAIL(ONO, PNO, QUANTITY,result_useyn) VALUES( 5, 29, 3,'n');
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 1, 2, 5);
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 2,  4, 3);
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 3, 3, 1);
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 3, 2, 1);
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 3, 6, 2);
+insert into order_detail(odseq, oseq, pseq, quantity) 
+values(order_detail_seq.nextval, 3, 1, 2);
  
  
  

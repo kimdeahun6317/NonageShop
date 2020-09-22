@@ -87,7 +87,7 @@ public class ProductDaoImpl implements ProductDao {
 		return null;
 	}
 
-	private Product getProduct(ResultSet rs) throws SQLException {
+	public Product getProduct(ResultSet rs) throws SQLException {
 		int no = rs.getInt("NO");
 		String name = rs.getString("NAME");
 		String kind = rs.getString("KIND");

@@ -13,6 +13,12 @@ public class Member {
 	private String useyn;
 	private Date joindate;
 
+	public Member(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub

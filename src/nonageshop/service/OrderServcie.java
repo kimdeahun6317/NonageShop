@@ -1,0 +1,103 @@
+package nonageshop.service;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import nonageshop.dao.CartDao;
+import nonageshop.dao.OrderDao;
+import nonageshop.dao.impl.CartDaoImpl;
+import nonageshop.dao.impl.OrderDaoImpl;
+import nonageshop.ds.JdbcUtil;
+import nonageshop.dto.OrderDetail;
+import nonageshop.dto.Orders;
+
+public class OrderServcie {
+	OrderDao dao = OrderDaoImpl.getInstance();
+	CartDao cdao = CartDaoImpl.getInstance();
+
+	@SuppressWarnings("unused")
+	private void rollbackUtil(Connection con, SQLException e) {
+
+		try {
+			System.out.println("roll back");
+			con.rollback();
+			throw new RuntimeException(e);
+		} catch (SQLException e1) {
+		}
+
+	}
+
+	@SuppressWarnings("unused")
+	private void closeUtil(Connection con, PreparedStatement orderPstmt, PreparedStatement orderDetailPstmt) {
+		try {
+			if (orderPstmt != null) {
+				orderPstmt.close();
+			}
+			if (orderDetailPstmt != null) {
+				orderDetailPstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+
+		} catch (SQLException e) {
+		}
+
+	}
+
+	public void transAddOrder(Orders order) {
+		Connection con = null;
+		PreparedStatement orderPstmt = null;
+		PreparedStatement orderDetailPstmt = null;
+		String sql = "INSERT INTO ORDERS(ID,ORDER_DATE) VALUES(?,SYSDATE)";
+		String ssql = "INSERT INTO ORDER_DETAIL(ONO, PNO, QUANTITY) VALUES( ?,?,?)";
+		int maxNo = 0;
+		try {
+			con = JdbcUtil.getConnection();
+			con.setAutoCommit(false);
+
+			orderPstmt = con.prepareStatement(sql);
+			orderPstmt.setString(1, order.getMember().getId());
+			orderPstmt.executeUpdate();
+
+			orderDetailPstmt = con.prepareStatement(ssql);
+			maxNo = dao.maxNo();
+
+			for (OrderDetail od : order.getDetails()) {
+				orderDetailPstmt.setInt(1, maxNo);
+				orderDetailPstmt.setInt(2, od.getCart().getProduct().getNo());
+				orderDetailPstmt.setInt(3, od.getCart().getQuantity());
+
+				cdao.
+			}
+
+			
+			
+			
+			
+			
+			
+			
+			orderDetailPstmt.setInt(1, maxOrderNo);
+			orderDetailPstmt.setInt(2, cart.getProduct().getNo());
+			orderDetailPstmt.setInt(3, cart.getQuantity());
+			orderDetailPstmt.executeUpdate();
+		} catch (SQLException e) {
+			rollbackUtil(con, e);
+		} finally {
+			closeUtil(con, orderPstmt, orderDetailPstmt);
+		}
+
+	}
+
+	public ArrayList<Order> listOrderById(String id, String result, int no) {
+		return dao.listOrderById(id, result, no);
+	};
+
+	public ArrayList<Order> selectNoOrderIng(String id) {
+		return dao.selectNoOrderIng(id);
+	};
+
+}
