@@ -9,36 +9,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import nonageshop.controller.Command;
-import nonageshop.dto.Cart;
 import nonageshop.dto.Member;
-import nonageshop.service.CartService;
+import nonageshop.dto.QnA;
+import nonageshop.service.QnAService;
 
-public class CartListHandler implements Command {
-	private CartService service = new CartService();
+public class QnaListHandler implements Command {
+	private QnAService service = new QnAService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String url = "qna/qnaList.jsp";
+
 		HttpSession session = request.getSession();
 		Member loginUser = (Member) session.getAttribute("loginUser");
+
 		if (loginUser == null) {
-			return "login.do";
+			url = "login.do";
 		} else {
-			ArrayList<Cart> list = service.getCartList(loginUser);
-			int totalPrice = 0;
-			if (list != null) {
-				for (Cart cart : list) {
-					totalPrice += cart.getProduct().getSalePrice() * cart.getQuantity();
-				}
-
-			} else {
-				list = new ArrayList<Cart>();
-			}
-			request.setAttribute("cartList", list);
-			request.setAttribute("totalPrice", totalPrice);
-			return "mypage/cartList.jsp";
+			ArrayList<QnA> qnaList = service.listQna(loginUser.getId());
+			request.setAttribute("qnaList", qnaList);
 		}
-
+		return url;
 	}
-
 }

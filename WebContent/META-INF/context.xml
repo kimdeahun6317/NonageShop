@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
+<!-- <Context>
 	<Resource 
     	name="jdbc/nonage" 
     	auth="Container"            
@@ -8,12 +8,31 @@
     	driverClassName="oracle.jdbc.OracleDriver"
     	url="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
     	user="nonage" 
-    	password="rootroot" 
+    	password="rootroot"
+    	maxTotal="100"
+    	maxIdle="10"
+    	maxWaitMillis="-1" 
     	removeAbandoned="true"
         removeAbandonedTimeout="5"
         logAbandoned="true"
     	/>
+</Context> -->
+<Context>
+	<Resource 
+		name="jdbc/nonage" 
+		auth="Container"
+		type="javax.sql.DataSource" 
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" 
+		username="nonage"
+		password="rootroot" 
+		maxTotal="100" 
+		maxIdle="10" 
+		maxWaitMillis="-1" />
 </Context>
+
+
+
 
 
 

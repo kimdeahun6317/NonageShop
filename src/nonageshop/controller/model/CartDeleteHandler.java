@@ -20,6 +20,7 @@ public class CartDeleteHandler implements Command {
 		} else {
 			System.out.println("POST");
 			System.out.println("GET");
+			System.out.println("나는 덩어리, 김덩어리 ");
 			String[] noArr = request.getParameterValues("no");
 
 			for (String cno : noArr) {

@@ -19,27 +19,36 @@ public class CartInsertHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(request.getMethod().equalsIgnoreCase("GET")) {
+		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
+			System.out.println("야광돼지 ");
+
+		} else {
+			System.out.println("POST");
+			System.out.println("야광돼지 ");
 			HttpSession session = request.getSession();
 			Member loginUser = (Member) session.getAttribute("loginUser");
-			if(loginUser == null) {
-				return "login.do";
-			}else {
-				Cart cart = new Cart();
-				cart.setMember(new Member(loginUser.getId()));
-				cart.setProduct(new Product(Integer.parseInt(request.getParameter("no"))));
-				cart.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+			if (loginUser == null) {
+				response.sendRedirect("login.do");
+			} else {
+				Cart cart = getCart(request, loginUser);
+				System.out.println("cart >" + cart);
 				service.insertCart(cart);
-				return "cartList.do";
+				response.sendRedirect("cartList.do");
 			}
-			
-			
-		}else {
-			System.out.println("POST");
-			
 		}
 		return null;
+
+	}
+
+	private Cart getCart(HttpServletRequest request, Member loginUser) {
+		Cart cart = new Cart();
+		cart.setMember(loginUser);
+		Product product = new Product();
+		product.setNo(Integer.parseInt(request.getParameter("no")));
+		cart.setProduct(product);
+		cart.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+		return cart;
 	}
 
 }

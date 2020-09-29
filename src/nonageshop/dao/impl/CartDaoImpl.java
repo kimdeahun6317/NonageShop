@@ -32,12 +32,12 @@ public class CartDaoImpl implements CartDao {
 
 	@Override
 	public int insertCart(Cart cart) {
-		String sql = "insert into cart(MEMBERID,PNO,QUANTITY,REG_DATE) values(?, ?,?,?)";
+		String sql = "insert into cart(MEMBERID,PNO,QUANTITY,REG_DATE) values(?, ?,?,SYSDATE)";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, cart.getMember().getId());
 			pstmt.setInt(2, cart.getProduct().getNo());
 			pstmt.setInt(3, cart.getQuantity());
-			pstmt.setTimestamp(4, new Timestamp(cart.getRegDate().getTime()));
+//			pstmt.setTimestamp(4, new Timestamp(cart.getRegDate().getTime()));
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new CustomSQLException(e);
@@ -45,10 +45,10 @@ public class CartDaoImpl implements CartDao {
 	}
 
 	@Override
-	public ArrayList<Cart> listCart(String userId) {
-		String sql = "SELECT NO,MEMBERID,PNO,QUANTITY,RESULT_USEYN,REG_DATE FROM CART WHERE memberid = ? ORDER BY NO ASC";
+	public ArrayList<Cart> listCart(Member member) {
+		String sql = "SELECT NO,MEMBERID,PNO,QUANTITY,RESULT_USEYN,REG_DATE FROM CART WHERE memberid = ? AND RESULT_USEYN='1' ORDER BY NO ASC";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, userId);
+			pstmt.setString(1, member.getId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				ArrayList<Cart> list = new ArrayList<Cart>();
 				if (rs.next()) {
@@ -89,10 +89,13 @@ public class CartDaoImpl implements CartDao {
 
 	@Override
 	public int updateCart(Cart cart) {
-		String sql = "";
-		return 0;
+		String sql = "update cart set result=2 where no=?";
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, cart.getNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CustomSQLException(e);
+		}
 	}
-	
-	
 
 }

@@ -16,4 +16,8 @@ public interface ProductDao {
 	
 	// 상품종류별 상품 리스트 얻어오기
 	ArrayList<Product> listKindProduct(String kind);
+
+	ArrayList<Product> listProduct(int tpage, String product_name);
+
+	String pageNumber(int tpage, String name);
 }

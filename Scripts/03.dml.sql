@@ -86,7 +86,10 @@ select d.NO dno, o.NO ono, o.id mid, o.ORDER_DATE , d.PNO pno, d.quantity, m.nam
        m.zip_no, m.address, m.phone, p.name pname, p.SALEPRICE , d.RESULT_USEYN result   
   from orders o JOIN order_detail d ON o.NO = d.ONO JOIN member m ON o.ID =m.ID 
        JOIN product p ON d.PNO = p.NO;
+      
+SELECT * FROM order_view;
  
+SELECT 대훈대지 꿀때지 퇴근할땐 4족보행 FROM 뷁;
 
  
  
@@ -114,6 +117,10 @@ insert into order_detail(odseq, oseq, pseq, quantity)
 values(order_detail_seq.nextval, 3, 1, 2);
  
  
- 
+ ---------------------------------qna
+ insert into qna (subject, content, id) values('테스트', '질문내용1', 'test');
+update qna SET rep='답변내용', rep_yn='2';
+
+insert into qna (subject, content, id)values('테스트2', '질문내용2', 'test');
  
  
